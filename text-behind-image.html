@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIBE CODER</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+  }
+
+  .scene {
+    position: relative;
+    width: 520px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* TEXT LAYER — behind */
+  .text-behind {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .text-behind .word {
+    font-size: clamp(70px, 15vw, 130px);
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -3px;
+    line-height: 0.82;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .word-vibe {
+    background: linear-gradient(135deg, #fff 0%, #aaa 40%, #fff 60%, #555 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(255,255,255,0.5));
+  }
+
+  .word-coder {
+    background: linear-gradient(135deg, #333 0%, #fff 35%, #888 65%, #111 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(255,255,255,0.4));
+  }
+
+  /* IMAGE LAYER — on top, white bg becomes transparent via multiply */
+  .img-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- TEXT — BEHIND -->
+  <div class="text-behind">
+    <span class="word word-vibe">VIBE</span>
+    <span class="word word-coder">CODER</span>
+  </div>
+
+  <!-- IMAGE — ON TOP -->
+  <div class="img-wrapper">
+    <img src="character.png" alt="vibe coder character">
+  </div>
+
+</div>
+
+<script>
+  let t = 0;
+  const wordVibe = document.querySelector('.word-vibe');
+  const wordCoder = document.querySelector('.word-coder');
+
+  function animate() {
+    t += 0.004;
+    const angle = (Math.sin(t) * 30 + 135).toFixed(1);
+    const pos = ((Math.sin(t * 0.7) * 20 + 50)).toFixed(1);
+    wordVibe.style.backgroundImage = `linear-gradient(${angle}deg, #fff 0%, #aaa ${pos}%, #fff 100%)`;
+    wordCoder.style.backgroundImage = `linear-gradient(${angle}deg, #222 0%, #fff ${pos}%, #666 100%)`;
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+</body>
+</html>
